@@ -1292,3 +1292,38 @@ body {
     font-family: var(--font-pixel);
     flex-shrink: 0;
 }
+
+#sort-indicator {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+    margin-left: 4px;
+}
+
+#sort-indicator svg {
+    color: var(--purple-dark);
+}
+
+#sort-indicator.asc .sort-up {
+    opacity: 1;
+}
+
+#sort-indicator.asc .sort-down {
+    opacity: 0.25;
+}
+
+#sort-indicator.desc .sort-up {
+    opacity: 0.25;
+}
+
+#sort-indicator.desc .sort-down {
+    opacity: 1;
+}
+
+#sort-indicator.none .sort-up {
+    opacity: 0.5;
+}
+
+#sort-indicator.none .sort-down {
+    opacity: 0.5;
+}

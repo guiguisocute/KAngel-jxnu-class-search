@@ -37,7 +37,7 @@
         <div class="desktop-icons">
             <div class="desktop-icon" onclick="openWindow('browser-window')">
                 <img src="assets/img/sprite_2_268x246.png" alt="Course Query">
-                <span>课程查询.exe</span>
+                <span>必修查询.exe</span>
             </div>
             <div class="desktop-icon" onclick="openWindow('electives-window')">
                 <img src="assets/img/sprite_3_215x183.png" alt="Electives">
@@ -47,10 +47,7 @@
                 <img src="assets/img/sprite_12_162x158.png" alt="Readme">
                 <span>数据说明.txt</span>
             </div>
-            <div class="desktop-icon" onclick="playSuperCuteSound()">
-                <img src="assets/img/sprite_1_234x219.png" alt="OMG_OMG">
-                <span>超天酱.exe</span>
-            </div>
+
         </div>
 
         <!-- MAIN BROWSER WINDOW -->
@@ -59,7 +56,7 @@
             <div class="window-header" onmousedown="dragStart(event, 'browser-window')">
                 <div class="window-title">
                     <img src="assets/img/sprite_23_27x27.png" alt="Browser Icon">
-                    <span>Internet Explorer - [课程查询系统.exe]</span>
+                    <span>Internet Explorer</span>
                 </div>
                 <div class="window-controls">
                     <button class="win-btn" onclick="minimizeWindow('browser-window')">－</button>
@@ -99,14 +96,14 @@
                             <!-- Mockup Title Inside Card -->
                             <div class="app-title-container" style="margin-bottom: 16px;">
                                 <img src="assets/img/sprite_18_50x57.png" class="sparkle-icon left" alt="Bow" style="width: 24px; height: 28px;">
-                                <h1 class="app-title" style="font-size: 24px;">课程查询</h1>
+                                <h1 class="app-title" style="font-size: 24px;">班级必修查询</h1>
                                 <img src="assets/img/sprite_6_31x27.png" class="sparkle-icon" alt="Sparkle" style="width: 18px; height: 16px;">
                             </div>
 
                             <div class="query-inputs">
                                 <div class="search-input-wrapper">
                                     <span class="search-icon-inside"><svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="display:inline-block; vertical-align:middle; image-rendering:pixelated;"><rect x="2" y="2" width="6" height="2" /><rect x="8" y="4" width="2" height="4" /><rect x="2" y="8" width="6" height="2" /><rect x="2" y="4" width="2" height="4" /><rect x="8" y="8" width="2" height="2" /><rect x="10" y="10" width="2" height="2" /><rect x="12" y="12" width="2" height="2" /><rect x="14" y="14" width="2" height="2" /></svg></span>
-                                    <input type="text" id="class-search-input" class="search-input" style="padding-left: 36px;" placeholder="学科课程与教学论·计算机" onkeydown="handleSearchKey(event)" autocomplete="off">
+                                    <input type="text" id="class-search-input" class="search-input" style="padding-left: 36px;" placeholder="输入你想查询的班级" onkeydown="handleSearchKey(event)" autocomplete="off">
                                     <!-- Autocomplete suggestions dropdown -->
                                     <div id="autocomplete-list" class="autocomplete-suggestions"></div>
                                 </div>
@@ -190,9 +187,8 @@
                     <p><strong>开课学院数：</strong><span id="meta-colleges-count">加载中...</span></p>
                     <br>
                     <h3>使用帮助</h3>
-                    <p>1. 在查询窗口中输入你要查询的完整或部分班级名称，如“2025级”或“音乐学”。</p>
-                    <p>2. 点击“查询”按钮或按下回车，即可在下方列表中显示该班级的所有相关课程信息。</p>
-                    <p>3. 可以点击推荐词进行快捷查询。</p>
+                    <p>1. 在查询窗口中输入你要查询的完整或部分班级名称”。</p>
+                    <p>2. 点击“查询”按钮或按下回车，即可在下方列表中显示该班级的所有相关必修课程信息。</p>
                 </div>
             </div>
         </div>
@@ -229,13 +225,16 @@
                                 <tr>
                                     <th>任课老师姓名</th>
                                     <th>任课老师所在单位</th>
-                                    <th id="header-select-num" style="text-align: center; cursor: pointer; user-select: none;">选课学生人数<span id="sort-indicator"></span></th>
-                                    <th style="text-align: center; user-select: none;">
-                                        拟开班数
-                                        <select id="filter-classes" style="font-family: var(--font-pixel); font-size: 11px; margin-left: 4px; background: white; border: 1px solid var(--purple); color: var(--purple-dark); padding: 1px 2px; cursor: pointer;">
-                                            <option value="all">全部</option>
-                                        </select>
+                                    <th id="header-select-num" style="text-align: center; cursor: pointer; user-select: none;">
+                                        选课学生人数
+                                        <span id="sort-indicator" class="none">
+                                            <svg viewBox="0 0 9 9" width="10" height="10" fill="currentColor" style="display:inline-block; vertical-align:middle; image-rendering:pixelated;">
+                                                <path class="sort-up" d="M4,0 h1 v1 h-1 z M3,1 h3 v1 h-3 z M2,2 h5 v1 h-5 z" />
+                                                <path class="sort-down" d="M2,6 h5 v1 h-5 z M3,7 h3 v1 h-3 z M4,8 h1 v1 h-1 z" />
+                                            </svg>
+                                        </span>
                                     </th>
+                                    <th style="text-align: center; user-select: none;">拟开班数</th>
                                     <th style="text-align: center;">每班容量</th>
                                     <th>排课说明</th>
                                 </tr>
@@ -276,7 +275,7 @@
             <div class="start-menu-items">
                 <div class="start-menu-item" onclick="openWindow('browser-window'); toggleStartMenu();">
                     <img src="assets/img/sprite_23_27x27.png" alt="Query">
-                    <span>课程查询系统</span>
+                    <span>必修查询.exe</span>
                 </div>
                 <div class="start-menu-item" onclick="openWindow('electives-window'); toggleStartMenu();">
                     <img src="assets/img/sprite_3_215x183.png" alt="Electives">

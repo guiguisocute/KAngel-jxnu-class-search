@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Sprite Catalog</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #fff9fd;
+            padding: 20px;
+            color: #7f5bc7;
+        }
+        h1 {
+            border-bottom: 2px solid #b28cf6;
+            padding-bottom: 10px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .card {
+            background: #fff;
+            border: 2px solid #b28cf6;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .img-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+            background: #eee;
+            width: 100%;
+            margin-bottom: 10px;
+            /* checkerboard background for transparency */
+            background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), 
+                              linear-gradient(-45deg, #ccc 25%, transparent 25%), 
+                              linear-gradient(45deg, transparent 75%, #ccc 75%), 
+                              linear-gradient(-45deg, transparent 75%, #ccc 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+        img {
+            max-width: 100%;
+            max-height: 140px;
+            image-rendering: pixelated;
+        }
+        .info {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sprite Catalog</h1>
+    <p>Total Sprites: 30</p>
+    <div class="grid">
+
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_1_234x219.png" alt="sprite_1_234x219.png">
+            </div>
+            <div class="info">
+                <strong>sprite_1_234x219.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_2_268x246.png" alt="sprite_2_268x246.png">
+            </div>
+            <div class="info">
+                <strong>sprite_2_268x246.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_3_215x183.png" alt="sprite_3_215x183.png">
+            </div>
+            <div class="info">
+                <strong>sprite_3_215x183.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_4_203x173.png" alt="sprite_4_203x173.png">
+            </div>
+            <div class="info">
+                <strong>sprite_4_203x173.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_5_31x30.png" alt="sprite_5_31x30.png">
+            </div>
+            <div class="info">
+                <strong>sprite_5_31x30.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_6_31x27.png" alt="sprite_6_31x27.png">
+            </div>
+            <div class="info">
+                <strong>sprite_6_31x27.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_7_33x34.png" alt="sprite_7_33x34.png">
+            </div>
+            <div class="info">
+                <strong>sprite_7_33x34.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_8_29x27.png" alt="sprite_8_29x27.png">
+            </div>
+            <div class="info">
+                <strong>sprite_8_29x27.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_9_20x18.png" alt="sprite_9_20x18.png">
+            </div>
+            <div class="info">
+                <strong>sprite_9_20x18.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_10_29x29.png" alt="sprite_10_29x29.png">
+            </div>
+            <div class="info">
+                <strong>sprite_10_29x29.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_11_250x208.png" alt="sprite_11_250x208.png">
+            </div>
+            <div class="info">
+                <strong>sprite_11_250x208.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_12_162x158.png" alt="sprite_12_162x158.png">
+            </div>
+            <div class="info">
+                <strong>sprite_12_162x158.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_13_71x78.png" alt="sprite_13_71x78.png">
+            </div>
+            <div class="info">
+                <strong>sprite_13_71x78.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_14_68x77.png" alt="sprite_14_68x77.png">
+            </div>
+            <div class="info">
+                <strong>sprite_14_68x77.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_15_25x23.png" alt="sprite_15_25x23.png">
+            </div>
+            <div class="info">
+                <strong>sprite_15_25x23.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_16_28x29.png" alt="sprite_16_28x29.png">
+            </div>
+            <div class="info">
+                <strong>sprite_16_28x29.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_17_34x31.png" alt="sprite_17_34x31.png">
+            </div>
+            <div class="info">
+                <strong>sprite_17_34x31.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_18_50x57.png" alt="sprite_18_50x57.png">
+            </div>
+            <div class="info">
+                <strong>sprite_18_50x57.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_19_22x22.png" alt="sprite_19_22x22.png">
+            </div>
+            <div class="info">
+                <strong>sprite_19_22x22.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_20_24x23.png" alt="sprite_20_24x23.png">
+            </div>
+            <div class="info">
+                <strong>sprite_20_24x23.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_21_22x19.png" alt="sprite_21_22x19.png">
+            </div>
+            <div class="info">
+                <strong>sprite_21_22x19.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_22_38x38.png" alt="sprite_22_38x38.png">
+            </div>
+            <div class="info">
+                <strong>sprite_22_38x38.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_23_27x27.png" alt="sprite_23_27x27.png">
+            </div>
+            <div class="info">
+                <strong>sprite_23_27x27.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_24_455x222.png" alt="sprite_24_455x222.png">
+            </div>
+            <div class="info">
+                <strong>sprite_24_455x222.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_25_28x28.png" alt="sprite_25_28x28.png">
+            </div>
+            <div class="info">
+                <strong>sprite_25_28x28.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_26_448x205.png" alt="sprite_26_448x205.png">
+            </div>
+            <div class="info">
+                <strong>sprite_26_448x205.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_27_24x28.png" alt="sprite_27_24x28.png">
+            </div>
+            <div class="info">
+                <strong>sprite_27_24x28.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_28_24x26.png" alt="sprite_28_24x26.png">
+            </div>
+            <div class="info">
+                <strong>sprite_28_24x26.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_29_27x27.png" alt="sprite_29_27x27.png">
+            </div>
+            <div class="info">
+                <strong>sprite_29_27x27.png</strong>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="img-container">
+                <img src="assets/img/sprite_30_24x24.png" alt="sprite_30_24x24.png">
+            </div>
+            <div class="info">
+                <strong>sprite_30_24x24.png</strong>
+            </div>
+        </div>
+    
+    </div>
+</body>
+</html>

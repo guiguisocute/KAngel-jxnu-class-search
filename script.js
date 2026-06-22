@@ -8,8 +8,7 @@ let electiveState = {
     renderedCount: 0,
     batchSize: 50,
     lastCourseNum: null,
-    sortOrder: 'none',
-    classFilter: 'all'
+    sortOrder: 'none'
 };
 
 // Web Audio API Synthesizer for Retro 8-bit Sounds
@@ -158,14 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Filter trigger by selecting class count option in header dropdown
-    const filterClasses = document.getElementById('filter-classes');
-    if (filterClasses) {
-        filterClasses.addEventListener('change', (e) => {
-            electiveState.classFilter = e.target.value;
-            applyElectiveFiltersAndSort();
-        });
-    }
+
 
     // Autocomplete events and dropdown closing
     const searchInput = document.getElementById('class-search-input');
@@ -685,31 +677,7 @@ function highlightText(source, query) {
     return source.replace(regex, '<span class="highlight">$1</span>');
 }
 
-// Interactive Super Cute Sound easter egg
-function playSuperCuteSound() {
-    // Play a lovely cute retro melody
-    playSound('success');
-    
-    // Spawn 10 floating pink hearts on desktop
-    const desktop = document.getElementById('desktop');
-    for (let i = 0; i < 10; i++) {
-        const heart = document.createElement('img');
-        heart.src = 'assets/img/sprite_13_71x78.png';
-        heart.className = 'deco-element';
-        heart.style.width = '32px';
-        heart.style.height = '32px';
-        heart.style.left = `${Math.floor(Math.random() * 80) + 10}%`;
-        heart.style.top = `${Math.floor(Math.random() * 60) + 20}%`;
-        heart.style.animation = 'float 2s ease-in-out forwards';
-        
-        desktop.appendChild(heart);
-        
-        // Remove after animation completes
-        setTimeout(() => {
-            heart.remove();
-        }, 2000);
-    }
-}
+
 
 // Extract unique required class names for autocomplete selection list
 function initAutocomplete() {
@@ -772,53 +740,24 @@ function initElectives() {
     
     electiveSections = list;
     
-    // Populate unique proposed classes filter dropdown
-    const uniqueClasses = new Set();
-    electiveSections.forEach(item => {
-        if (item.classes && item.classes !== '--') {
-            uniqueClasses.add(item.classes);
-        }
-    });
-    const filterSelect = document.getElementById('filter-classes');
-    if (filterSelect) {
-        filterSelect.innerHTML = '<option value="all">全部</option>';
-        Array.from(uniqueClasses).sort((a, b) => {
-            const numA = parseInt(a);
-            const numB = parseInt(b);
-            if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
-            return String(a).localeCompare(String(b));
-        }).forEach(val => {
-            const opt = document.createElement('option');
-            opt.value = val;
-            opt.textContent = val;
-            filterSelect.appendChild(opt);
-        });
-        if (electiveSections.some(item => item.classes === '--')) {
-            const opt = document.createElement('option');
-            opt.value = '--';
-            opt.textContent = '未指定';
-            filterSelect.appendChild(opt);
-        }
-    }
+
     
     resetElectiveSearch();
 }
 
 // Reset electives query to clean initial state
 function resetElectiveSearch() {
-    electiveState.classFilter = 'all';
     electiveState.sortOrder = 'none';
     
-    const filterSelect = document.getElementById('filter-classes');
-    if (filterSelect) filterSelect.value = 'all';
-    
     const indicator = document.getElementById('sort-indicator');
-    if (indicator) indicator.textContent = '';
+    if (indicator) {
+        indicator.className = 'none';
+    }
     
     applyElectiveFiltersAndSort();
 }
 
-// Combine search keyword filtering, class count filtering and student count sorting
+// Combine search keyword filtering and student count sorting
 function applyElectiveFiltersAndSort() {
     const searchInput = document.getElementById('elective-search-input');
     const searchVal = searchInput ? searchInput.value.trim().toLowerCase() : '';
@@ -835,12 +774,7 @@ function applyElectiveFiltersAndSort() {
         );
     }
     
-    // 2. Filter by proposed number of classes
-    if (electiveState.classFilter !== 'all') {
-        result = result.filter(item => item.classes === electiveState.classFilter);
-    }
-    
-    // 3. Sort by student count
+    // 2. Sort by student count
     if (electiveState.sortOrder !== 'none') {
         // Clone to avoid mutating original list order
         result = [...result];
@@ -851,7 +785,7 @@ function applyElectiveFiltersAndSort() {
         });
     }
     
-    // 4. Reset pagination state and render
+    // 3. Reset pagination state and render
     electiveState.allFiltered = result;
     electiveState.renderedCount = 0;
     electiveState.lastCourseNum = null;
@@ -868,15 +802,17 @@ function toggleEnrollmentSort() {
     const indicator = document.getElementById('sort-indicator');
     if (!indicator) return;
     
+    indicator.className = 'none';
+    
     if (electiveState.sortOrder === 'none') {
         electiveState.sortOrder = 'desc';
-        indicator.textContent = ' [降序]';
+        indicator.className = 'desc';
     } else if (electiveState.sortOrder === 'desc') {
         electiveState.sortOrder = 'asc';
-        indicator.textContent = ' [升序]';
+        indicator.className = 'asc';
     } else {
         electiveState.sortOrder = 'none';
-        indicator.textContent = '';
+        indicator.className = 'none';
     }
     
     applyElectiveFiltersAndSort();
