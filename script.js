@@ -388,6 +388,8 @@ function minimizeWindow(id) {
 
 function toggleMaximize(id) {
     const win = document.getElementById(id);
+    const maxBtn = win.querySelector('.window-controls .win-btn:nth-child(2)');
+    
     if (win.classList.contains('maximized')) {
         win.classList.remove('maximized');
         
@@ -407,13 +409,23 @@ function toggleMaximize(id) {
         win.style.left = `${(window.innerWidth - w) / 2}px`;
         win.style.top = `${(window.innerHeight - h) / 2}px`;
         win.style.transform = 'none';
+        
+        // Restore standard maximize icon
+        if (maxBtn) {
+            maxBtn.innerHTML = '<svg viewBox="0 0 10 10" width="10" height="10" fill="currentColor" style="display:block;"><path d="M0,0 h10 v10 h-10 z M1,2 h8 v7 h-8 z" /></svg>';
+        }
     } else {
         win.classList.add('maximized');
-        win.style.width = '100vw';
+        win.style.width = '100%';
         win.style.height = 'calc(100vh - 40px)';
         win.style.top = '0';
         win.style.left = '0';
         win.style.transform = 'none';
+        
+        // Show restore icon (overlapping windows)
+        if (maxBtn) {
+            maxBtn.innerHTML = '<svg viewBox="0 0 10 10" width="10" height="10" fill="currentColor" style="display:block;"><path d="M2,0 h8 v8 h-2 v-6 h-6 z" /><path d="M0,2 h8 v8 h-8 z M1,4 h6 v5 h-6 z" /></svg>';
+        }
     }
 }
 

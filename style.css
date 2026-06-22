@@ -144,6 +144,11 @@ body {
     box-shadow: 6px 6px 0px var(--purple);
 }
 
+.window.maximized {
+    resize: none !important;
+    box-shadow: none !important;
+}
+
 .window-header {
     background: linear-gradient(90deg, var(--purple), var(--pink));
     color: white;
