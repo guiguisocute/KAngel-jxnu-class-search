@@ -1,0 +1,16 @@
+# Scratch files
+scratch/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Local IDE configuration
+.vscode/
+.idea/
+
+# OS temporary files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
