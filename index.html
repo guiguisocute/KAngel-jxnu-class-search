@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程查询系统 🌸 Class Course Query</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Desktop Environment Container -->
+    <div id="desktop">
+        <!-- Mobile Status Bar (visible only on mobile) -->
+        <div class="mobile-status-bar" style="display: none;">
+            <span class="mobile-status-time" id="mobile-clock">12:00</span>
+            <div class="mobile-status-icons">
+                <span>📶</span>
+                <span>🔋 99%</span>
+            </div>
+        </div>
+        
+        <!-- Background floating pixel decorations (defined in CSS + randomized in JS) -->
+        <img src="assets/img/sprite_13_71x78.png" class="deco-element deco-left-heart" alt="Pink Heart">
+        <img src="assets/img/sprite_14_68x77.png" class="deco-element deco-left-star" alt="Blue Star">
+        <img src="assets/img/sprite_1_234x219.png" class="deco-element deco-right-heartstar" alt="Blue Heart">
+        <img src="assets/img/sprite_12_162x158.png" class="deco-element deco-right-bow" alt="Pink Bow">
+        <img src="assets/img/sprite_22_38x38.png" class="deco-element deco-star-empty" alt="Empty Star">
+        
+        <!-- Corner Pixel Clouds (from the sliced sprite sheet) -->
+        <img src="assets/img/sprite_26_448x205.png" class="deco-element deco-cloud-left" alt="Left Cloud">
+        <img src="assets/img/sprite_24_455x222.png" class="deco-element deco-cloud-right" alt="Right Cloud">
+
+        <!-- Desktop Shortcuts -->
+        <div class="desktop-icons">
+            <div class="desktop-icon" onclick="openWindow('browser-window')">
+                <img src="assets/img/sprite_2_268x246.png" alt="Course Query">
+                <span>课程查询.exe</span>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('electives-window')">
+                <img src="assets/img/sprite_3_215x183.png" alt="Electives">
+                <span>选修情况.exe</span>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('readme-window')">
+                <img src="assets/img/sprite_12_162x158.png" alt="Readme">
+                <span>数据说明.txt</span>
+            </div>
+            <div class="desktop-icon" onclick="playSuperCuteSound()">
+                <img src="assets/img/sprite_1_234x219.png" alt="OMG_OMG">
+                <span>超天酱.exe</span>
+            </div>
+        </div>
+
+        <!-- MAIN BROWSER WINDOW -->
+        <div id="browser-window" class="window active-window" data-window="browser">
+            <!-- Window Header (Win98 Bar style) -->
+            <div class="window-header" onmousedown="dragStart(event, 'browser-window')">
+                <div class="window-title">
+                    <img src="assets/img/sprite_23_27x27.png" alt="Browser Icon">
+                    <span>Internet Explorer - [课程查询系统.exe]</span>
+                </div>
+                <div class="window-controls">
+                    <button class="win-btn" onclick="minimizeWindow('browser-window')">－</button>
+                    <button class="win-btn" onclick="toggleMaximize('browser-window')">🔲</button>
+                    <button class="win-btn" onclick="closeWindow('browser-window')">×</button>
+                </div>
+            </div>
+
+            <!-- Address bar / Navigation -->
+            <div class="browser-nav-bar">
+                <button class="browser-nav-btn" onclick="showAlert('已经是第一页啦！')">◀</button>
+                <button class="browser-nav-btn" onclick="showAlert('没有下一页啦！')">▶</button>
+                <button class="browser-nav-btn" onclick="location.reload()">↻</button>
+                <div class="browser-address-bar">
+                    <span class="address-icon">🌐</span>
+                    <input type="text" class="browser-address-input" id="address-input" value="http://course-query.edu/26-27-1/search.exe" readonly>
+                </div>
+            </div>
+
+            <!-- Browser Content Panel -->
+            <div class="window-body">
+                <div class="browser-content">
+                    
+                    <!-- QUERY.EXE SEARCH BOX -->
+                    <div class="query-box-container">
+                        <div class="query-exe-title">QUERY.EXE</div>
+                        
+                        <div id="loading-container" class="loading-box">
+                            <img src="assets/img/sprite_13_71x78.png" class="loading-heart" alt="Loading Heart">
+                            <div class="loading-bar-bg">
+                                <div id="loading-bar" class="loading-bar-fill"></div>
+                            </div>
+                            <div id="loading-text" class="loading-text">SYSTEM BOOTING...</div>
+                        </div>
+
+                        <div id="query-form" style="display: none;">
+                            <!-- Mockup Title Inside Card -->
+                            <div class="app-title-container" style="margin-bottom: 16px;">
+                                <img src="assets/img/sprite_18_50x57.png" class="sparkle-icon left" alt="Bow" style="width: 24px; height: 28px;">
+                                <h1 class="app-title" style="font-size: 24px;">课程查询</h1>
+                                <img src="assets/img/sprite_6_31x27.png" class="sparkle-icon" alt="Sparkle" style="width: 18px; height: 16px;">
+                            </div>
+
+                            <div class="query-inputs">
+                                <div class="search-input-wrapper">
+                                    <span class="search-icon-inside">🔍</span>
+                                    <input type="text" id="class-search-input" class="search-input" style="padding-left: 36px;" placeholder="学科课程与教学论·计算机" onkeydown="handleSearchKey(event)" autocomplete="off">
+                                    <!-- Autocomplete suggestions dropdown -->
+                                    <div id="autocomplete-list" class="autocomplete-suggestions"></div>
+                                </div>
+                                <button class="query-btn" onclick="performSearch()">
+                                    <span>查询</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- RESULTS TABLE WINDOW -->
+                    <div class="results-container">
+                        <div class="results-header">
+                            <div class="results-stats">
+                                <span>RESULT.TXT</span>
+                                <span id="query-result-count" style="display: none;">共找到 0 门课程</span>
+                            </div>
+                            <div>STATUS: READY</div>
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table class="course-table" id="results-table" style="display: none;">
+                                <thead>
+                                    <tr>
+                                        <th>学院</th>
+                                        <th>课程号</th>
+                                        <th>课程名称</th>
+                                        <th>性质</th>
+                                        <th>周课时</th>
+                                        <th>周实验</th>
+                                        <th>班级人数</th>
+                                        <th>组班状态</th>
+                                        <th>组班说明</th>
+                                        <th>排课说明</th>
+                                        <th>任课老师</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-body">
+                                    <!-- Rows added dynamically -->
+                                </tbody>
+                            </table>
+                            
+                            <!-- Empty Initial State -->
+                            <div class="table-empty-state" id="empty-state">
+                                <p class="empty-text">请输入班级名称并点击“查询”~</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <footer class="footer-container">
+                        <img src="assets/img/sprite_6_31x27.png" class="footer-icon" alt="star">
+                        <span>© 2025 Course Query System</span>
+                        <img src="assets/img/sprite_29_27x27.png" class="footer-icon" alt="star">
+                    </footer>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- DOCUMENT VIEW WINDOW -->
+        <div id="readme-window" class="window" style="display: none;" data-window="readme">
+            <div class="window-header" onmousedown="dragStart(event, 'readme-window')">
+                <div class="window-title">
+                    <img src="assets/img/sprite_28_24x26.png" alt="Doc Icon">
+                    <span>数据说明.txt - 记事本</span>
+                </div>
+                <div class="window-controls">
+                    <button class="win-btn" onclick="minimizeWindow('readme-window')">－</button>
+                    <button class="win-btn" onclick="toggleMaximize('readme-window')">🔲</button>
+                    <button class="win-btn" onclick="closeWindow('readme-window')">×</button>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="readme-content">
+                    <h3>🌸 课程查询系统数据信息 🌸</h3>
+                    <p><strong>当前学期：</strong><span id="meta-semester">加载中...</span></p>
+                    <p><strong>更新时间：</strong><span id="meta-fetched-at">加载中...</span></p>
+                    <p><strong>课程总量：</strong><span id="meta-total-courses">加载中...</span></p>
+                    <p><strong>开课学院数：</strong><span id="meta-colleges-count">加载中...</span></p>
+                    <br>
+                    <h3>💡 使用帮助</h3>
+                    <p>1. 在查询窗口中输入你要查询的完整或部分班级名称，如“2025级”或“音乐学”。</p>
+                    <p>2. 点击“查询”按钮或按下回车，即可在下方列表中显示该班级的所有相关课程信息。</p>
+                    <p>3. 可以点击推荐词进行快捷查询。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ELECTIVE COURSES EXPLORER WINDOW -->
+        <div id="electives-window" class="window" style="display: none; width: 780px; height: 520px;" data-window="electives">
+            <div class="window-header" onmousedown="dragStart(event, 'electives-window')">
+                <div class="window-title">
+                    <img src="assets/img/sprite_3_215x183.png" alt="Electives Icon" style="width: 18px; height: 18px;">
+                    <span>ELECTIVES.EXE - 选修课人数及容量查询</span>
+                </div>
+                <div class="window-controls">
+                    <button class="win-btn" onclick="minimizeWindow('electives-window')">－</button>
+                    <button class="win-btn" onclick="toggleMaximize('electives-window')">🔲</button>
+                    <button class="win-btn" onclick="closeWindow('electives-window')">×</button>
+                </div>
+            </div>
+            <div class="window-body" style="padding: 16px;">
+                <div class="electives-query-container">
+                    <div class="electives-query-header">
+                        <div class="app-title-container" style="margin-bottom: 0; gap: 8px;">
+                            <img src="assets/img/sprite_18_50x57.png" class="sparkle-icon" alt="Bow" style="width: 20px; height: 23px;">
+                            <h2 style="font-size: 18px; color: #7f5bc7; font-family: var(--font-cute);">选修课人数及容量查询</h2>
+                        </div>
+                        <div class="electives-search-wrapper" style="position: relative; width: 300px;">
+                            <span class="search-icon-inside" style="font-size: 13px; left: 10px;">🔍</span>
+                            <input type="text" id="elective-search-input" class="search-input" style="height: 36px; font-size: 13px; padding-left: 30px; box-shadow: none;" placeholder="输入课程名/教师/学院进行筛选..." autocomplete="off">
+                        </div>
+                    </div>
+                    
+                    <div class="table-wrapper" id="electives-table-wrapper">
+                        <table class="course-table" id="electives-table">
+                            <thead>
+                                <tr>
+                                    <th>任课老师姓名</th>
+                                    <th>任课老师所在单位</th>
+                                    <th style="text-align: center;">选课学生人数</th>
+                                    <th style="text-align: center;">拟开班数</th>
+                                    <th style="text-align: center;">每班容量</th>
+                                    <th>排课说明</th>
+                                </tr>
+                            </thead>
+                            <tbody id="electives-table-body">
+                                <!-- Filled dynamically in script.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="electives-query-footer" style="margin-top: 12px; font-size: 12px; color: var(--purple-dark); display: flex; justify-content: space-between; font-family: var(--font-pixel);">
+                        <span id="elective-total-stat">共找到 0 门选修课班次</span>
+                        <span>STATUS: LIVE UPDATE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Warning Alert Dialog Box -->
+        <div id="dialog-box" class="dialog-box">
+            <div class="dialog-header">
+                <span>SYSTEM ERROR.EXE</span>
+                <button class="win-btn" style="width:16px;height:16px;font-size:10px;" onclick="closeAlert()">×</button>
+            </div>
+            <div class="dialog-body">
+                <img src="assets/img/sprite_21_22x19.png" class="dialog-icon" alt="Warning Icon">
+                <span class="dialog-text" id="dialog-message">请输入有效的班级名称！</span>
+            </div>
+            <div class="dialog-footer">
+                <button class="dialog-btn" onclick="closeAlert()">确定(O)</button>
+            </div>
+        </div>
+
+        <!-- Start Menu -->
+        <div id="start-menu" class="start-menu">
+            <div class="start-menu-header">
+                <span>Welcome to Needy System</span>
+            </div>
+            <div class="start-menu-items">
+                <div class="start-menu-item" onclick="openWindow('browser-window'); toggleStartMenu();">
+                    <img src="assets/img/sprite_23_27x27.png" alt="Query">
+                    <span>课程查询系统</span>
+                </div>
+                <div class="start-menu-item" onclick="openWindow('electives-window'); toggleStartMenu();">
+                    <img src="assets/img/sprite_3_215x183.png" alt="Electives">
+                    <span>选修情况.exe</span>
+                </div>
+                <div class="start-menu-item" onclick="openWindow('readme-window'); toggleStartMenu();">
+                    <img src="assets/img/sprite_28_24x26.png" alt="Doc">
+                    <span>数据说明.txt</span>
+                </div>
+                <div class="start-menu-item" onclick="resetSystem(); toggleStartMenu();">
+                    <img src="assets/img/sprite_30_24x24.png" alt="Reset">
+                    <span>重置系统 (R)</span>
+                </div>
+                <div class="start-menu-item" onclick="shutdownSystem();">
+                    <img src="assets/img/sprite_21_22x19.png" alt="Exit">
+                    <span>关机 (S)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTTOM TASKBAR -->
+        <div class="taskbar">
+            <div class="taskbar-left">
+                <button class="start-btn" onclick="toggleStartMenu()">
+                    <img src="assets/img/sprite_13_71x78.png" class="start-logo" alt="Logo">
+                    <span>开始</span>
+                </button>
+                <div class="task-items">
+                    <div id="task-browser" class="task-item active-task" onclick="toggleWindowFromTaskbar('browser-window')">
+                        <img src="assets/img/sprite_23_27x27.png" alt="IE">
+                        <span>课程查询.exe</span>
+                    </div>
+                    <div id="task-electives" class="task-item" style="display: none;" onclick="toggleWindowFromTaskbar('electives-window')">
+                        <img src="assets/img/sprite_3_215x183.png" alt="Electives">
+                        <span>选修情况.exe</span>
+                    </div>
+                    <div id="task-readme" class="task-item" style="display: none;" onclick="toggleWindowFromTaskbar('readme-window')">
+                        <img src="assets/img/sprite_28_24x26.png" alt="Readme">
+                        <span>数据说明.txt</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="taskbar-right">
+                <div class="sys-tray">
+                    <img src="assets/img/sprite_6_31x27.png" class="tray-icon" alt="Star">
+                    <img src="assets/img/sprite_22_38x38.png" class="tray-icon" alt="Star">
+                    <span id="live-clock">12:00</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
