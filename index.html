@@ -13,9 +13,12 @@
         <!-- Mobile Status Bar (visible only on mobile) -->
         <div class="mobile-status-bar" style="display: none;">
             <span class="mobile-status-time" id="mobile-clock">12:00</span>
-            <div class="mobile-status-icons">
-                <span>Sig</span>
-                <span>BAT 99%</span>
+            <div class="mobile-status-icons" style="display: flex; align-items: center; gap: 6px;">
+                <svg viewBox="0 0 12 10" width="12" height="10" fill="currentColor" style="image-rendering:pixelated;"><rect x="0" y="8" width="2" height="2" /><rect x="3" y="6" width="2" height="4" /><rect x="6" y="4" width="2" height="6" /><rect x="9" y="1" width="2" height="9" /></svg>
+                <div style="display: flex; align-items: center; gap: 3px;">
+                    <svg viewBox="0 0 16 10" width="16" height="10" fill="currentColor" style="image-rendering:pixelated;"><rect x="0" y="0" width="13" height="1" /><rect x="0" y="9" width="13" height="1" /><rect x="0" y="1" width="1" height="8" /><rect x="12" y="1" width="1" height="2" /><rect x="12" y="7" width="1" height="2" /><rect x="13" y="3" width="2" height="4" /><rect x="2" y="2" width="2" height="6" /><rect x="5" y="2" width="2" height="6" /><rect x="8" y="2" width="2" height="6" /></svg>
+                    <span>99%</span>
+                </div>
             </div>
         </div>
         
@@ -71,7 +74,7 @@
                 <button class="browser-nav-btn" onclick="showAlert('没有下一页啦！')">▶</button>
                 <button class="browser-nav-btn" onclick="location.reload()">↻</button>
                 <div class="browser-address-bar">
-                    <span class="address-icon">URL:</span>
+                    <span class="address-icon"><svg viewBox="0 0 14 14" width="14" height="14" fill="currentColor" style="display:inline-block; vertical-align:middle; image-rendering:pixelated;"><rect x="4" y="0" width="6" height="1" /><rect x="10" y="1" width="2" height="1" /><rect x="12" y="2" width="1" height="2" /><rect x="13" y="4" width="1" height="6" /><rect x="12" y="10" width="1" height="2" /><rect x="10" y="12" width="2" height="1" /><rect x="4" y="13" width="6" height="1" /><rect x="2" y="12" width="2" height="1" /><rect x="1" y="10" width="1" height="2" /><rect x="0" y="4" width="1" height="6" /><rect x="1" y="2" width="1" height="2" /><rect x="2" y="1" width="2" height="1" /><rect x="6" y="1" width="2" height="12" /><rect x="2" y="6" width="10" height="2" /></svg></span>
                     <input type="text" class="browser-address-input" id="address-input" value="http://course-query.edu/26-27-1/search.exe" readonly>
                 </div>
             </div>
@@ -102,7 +105,7 @@
 
                             <div class="query-inputs">
                                 <div class="search-input-wrapper">
-                                    <span class="search-icon-inside">[查找]</span>
+                                    <span class="search-icon-inside"><svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="display:inline-block; vertical-align:middle; image-rendering:pixelated;"><rect x="2" y="2" width="6" height="2" /><rect x="8" y="4" width="2" height="4" /><rect x="2" y="8" width="6" height="2" /><rect x="2" y="4" width="2" height="4" /><rect x="8" y="8" width="2" height="2" /><rect x="10" y="10" width="2" height="2" /><rect x="12" y="12" width="2" height="2" /><rect x="14" y="14" width="2" height="2" /></svg></span>
                                     <input type="text" id="class-search-input" class="search-input" style="padding-left: 36px;" placeholder="学科课程与教学论·计算机" onkeydown="handleSearchKey(event)" autocomplete="off">
                                     <!-- Autocomplete suggestions dropdown -->
                                     <div id="autocomplete-list" class="autocomplete-suggestions"></div>
@@ -215,8 +218,8 @@
                             <h2 style="font-size: 18px; color: #7f5bc7; font-family: var(--font-cute);">选修课人数及容量查询</h2>
                         </div>
                         <div class="electives-search-wrapper" style="position: relative; width: 300px;">
-                            <span class="search-icon-inside" style="font-size: 11px; left: 10px;">[筛选]</span>
-                            <input type="text" id="elective-search-input" class="search-input" style="height: 36px; font-size: 13px; padding-left: 45px; box-shadow: none;" placeholder="输入课程名/教师/学院进行筛选..." autocomplete="off">
+                            <span class="search-icon-inside" style="left: 10px; display: flex; align-items: center; justify-content: center; height: 100%;"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="image-rendering:pixelated;"><rect x="2" y="2" width="6" height="2" /><rect x="8" y="4" width="2" height="4" /><rect x="2" y="8" width="6" height="2" /><rect x="2" y="4" width="2" height="4" /><rect x="8" y="8" width="2" height="2" /><rect x="10" y="10" width="2" height="2" /><rect x="12" y="12" width="2" height="2" /><rect x="14" y="14" width="2" height="2" /></svg></span>
+                            <input type="text" id="elective-search-input" class="search-input" style="height: 36px; font-size: 13px; padding-left: 32px; box-shadow: none;" placeholder="输入课程名/教师/学院进行筛选..." autocomplete="off">
                         </div>
                     </div>
                     
