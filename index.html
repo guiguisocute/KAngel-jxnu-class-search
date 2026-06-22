@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>课程查询系统 🌸 Class Course Query</title>
+    <title>🥺</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,8 +14,8 @@
         <div class="mobile-status-bar" style="display: none;">
             <span class="mobile-status-time" id="mobile-clock">12:00</span>
             <div class="mobile-status-icons">
-                <span>📶</span>
-                <span>🔋 99%</span>
+                <span>Sig</span>
+                <span>BAT 99%</span>
             </div>
         </div>
         
@@ -71,7 +71,7 @@
                 <button class="browser-nav-btn" onclick="showAlert('没有下一页啦！')">▶</button>
                 <button class="browser-nav-btn" onclick="location.reload()">↻</button>
                 <div class="browser-address-bar">
-                    <span class="address-icon">🌐</span>
+                    <span class="address-icon">URL:</span>
                     <input type="text" class="browser-address-input" id="address-input" value="http://course-query.edu/26-27-1/search.exe" readonly>
                 </div>
             </div>
@@ -102,7 +102,7 @@
 
                             <div class="query-inputs">
                                 <div class="search-input-wrapper">
-                                    <span class="search-icon-inside">🔍</span>
+                                    <span class="search-icon-inside">[查找]</span>
                                     <input type="text" id="class-search-input" class="search-input" style="padding-left: 36px;" placeholder="学科课程与教学论·计算机" onkeydown="handleSearchKey(event)" autocomplete="off">
                                     <!-- Autocomplete suggestions dropdown -->
                                     <div id="autocomplete-list" class="autocomplete-suggestions"></div>
@@ -180,13 +180,13 @@
             </div>
             <div class="window-body">
                 <div class="readme-content">
-                    <h3>🌸 课程查询系统数据信息 🌸</h3>
+                    <h3>课程查询系统数据信息</h3>
                     <p><strong>当前学期：</strong><span id="meta-semester">加载中...</span></p>
                     <p><strong>更新时间：</strong><span id="meta-fetched-at">加载中...</span></p>
                     <p><strong>课程总量：</strong><span id="meta-total-courses">加载中...</span></p>
                     <p><strong>开课学院数：</strong><span id="meta-colleges-count">加载中...</span></p>
                     <br>
-                    <h3>💡 使用帮助</h3>
+                    <h3>使用帮助</h3>
                     <p>1. 在查询窗口中输入你要查询的完整或部分班级名称，如“2025级”或“音乐学”。</p>
                     <p>2. 点击“查询”按钮或按下回车，即可在下方列表中显示该班级的所有相关课程信息。</p>
                     <p>3. 可以点击推荐词进行快捷查询。</p>
@@ -215,8 +215,8 @@
                             <h2 style="font-size: 18px; color: #7f5bc7; font-family: var(--font-cute);">选修课人数及容量查询</h2>
                         </div>
                         <div class="electives-search-wrapper" style="position: relative; width: 300px;">
-                            <span class="search-icon-inside" style="font-size: 13px; left: 10px;">🔍</span>
-                            <input type="text" id="elective-search-input" class="search-input" style="height: 36px; font-size: 13px; padding-left: 30px; box-shadow: none;" placeholder="输入课程名/教师/学院进行筛选..." autocomplete="off">
+                            <span class="search-icon-inside" style="font-size: 11px; left: 10px;">[筛选]</span>
+                            <input type="text" id="elective-search-input" class="search-input" style="height: 36px; font-size: 13px; padding-left: 45px; box-shadow: none;" placeholder="输入课程名/教师/学院进行筛选..." autocomplete="off">
                         </div>
                     </div>
                     
@@ -226,8 +226,13 @@
                                 <tr>
                                     <th>任课老师姓名</th>
                                     <th>任课老师所在单位</th>
-                                    <th style="text-align: center;">选课学生人数</th>
-                                    <th style="text-align: center;">拟开班数</th>
+                                    <th id="header-select-num" style="text-align: center; cursor: pointer; user-select: none;">选课学生人数<span id="sort-indicator"></span></th>
+                                    <th style="text-align: center; user-select: none;">
+                                        拟开班数
+                                        <select id="filter-classes" style="font-family: var(--font-pixel); font-size: 11px; margin-left: 4px; background: white; border: 1px solid var(--purple); color: var(--purple-dark); padding: 1px 2px; cursor: pointer;">
+                                            <option value="all">全部</option>
+                                        </select>
+                                    </th>
                                     <th style="text-align: center;">每班容量</th>
                                     <th>排课说明</th>
                                 </tr>

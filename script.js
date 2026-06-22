@@ -7,7 +7,9 @@ let electiveState = {
     allFiltered: [],
     renderedCount: 0,
     batchSize: 50,
-    lastCourseNum: null
+    lastCourseNum: null,
+    sortOrder: 'none',
+    classFilter: 'all'
 };
 
 // Web Audio API Synthesizer for Retro 8-bit Sounds
@@ -129,30 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const electiveSearchInput = document.getElementById('elective-search-input');
     if (electiveSearchInput) {
         electiveSearchInput.addEventListener('input', () => {
-            const val = electiveSearchInput.value.trim().toLowerCase();
-            if (!val) {
-                resetElectiveSearch();
-                return;
-            }
-            
-            // Filter by course title, teacher name, department, college, or course ID
-            const filtered = electiveSections.filter(item => 
-                item.title.toLowerCase().includes(val) || 
-                item.teacher.toLowerCase().includes(val) || 
-                item.dept.toLowerCase().includes(val) || 
-                item.college.toLowerCase().includes(val) || 
-                item.courseNum.toLowerCase().includes(val)
-            );
-            
-            electiveState.allFiltered = filtered;
-            electiveState.renderedCount = 0;
-            electiveState.lastCourseNum = null;
-            
-            const body = document.getElementById('electives-table-body');
-            if (body) body.innerHTML = '';
-            
-            loadMoreElectives();
-            updateElectiveCount(filtered.length);
+            applyElectiveFiltersAndSort();
         });
     }
 
@@ -168,6 +147,23 @@ document.addEventListener('DOMContentLoaded', () => {
             if (scrollTop + clientHeight >= scrollHeight - 20) {
                 loadMoreElectives();
             }
+        });
+    }
+
+    // Sort trigger by clicking the electives table header for student enrollment count
+    const headerSelectNum = document.getElementById('header-select-num');
+    if (headerSelectNum) {
+        headerSelectNum.addEventListener('click', () => {
+            toggleEnrollmentSort();
+        });
+    }
+
+    // Filter trigger by selecting class count option in header dropdown
+    const filterClasses = document.getElementById('filter-classes');
+    if (filterClasses) {
+        filterClasses.addEventListener('change', (e) => {
+            electiveState.classFilter = e.target.value;
+            applyElectiveFiltersAndSort();
         });
     }
 
@@ -225,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 tip.style.padding = '8px';
                 tip.style.borderTop = '1px dashed var(--pink)';
                 tip.style.cursor = 'default';
-                tip.textContent = `✨ 还有 ${matches.length - 10} 个班级，请输入更精确的字词以筛选 ✨`;
+                tip.textContent = `还有 ${matches.length - 10} 个班级，请输入更精确的字词以筛选`;
                 autocompleteList.appendChild(tip);
             }
             
@@ -763,12 +759,88 @@ function initElectives() {
     });
     
     electiveSections = list;
+    
+    // Populate unique proposed classes filter dropdown
+    const uniqueClasses = new Set();
+    electiveSections.forEach(item => {
+        if (item.classes && item.classes !== '--') {
+            uniqueClasses.add(item.classes);
+        }
+    });
+    const filterSelect = document.getElementById('filter-classes');
+    if (filterSelect) {
+        filterSelect.innerHTML = '<option value="all">全部</option>';
+        Array.from(uniqueClasses).sort((a, b) => {
+            const numA = parseInt(a);
+            const numB = parseInt(b);
+            if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+            return String(a).localeCompare(String(b));
+        }).forEach(val => {
+            const opt = document.createElement('option');
+            opt.value = val;
+            opt.textContent = val;
+            filterSelect.appendChild(opt);
+        });
+        if (electiveSections.some(item => item.classes === '--')) {
+            const opt = document.createElement('option');
+            opt.value = '--';
+            opt.textContent = '未指定';
+            filterSelect.appendChild(opt);
+        }
+    }
+    
     resetElectiveSearch();
 }
 
 // Reset electives query to clean initial state
 function resetElectiveSearch() {
-    electiveState.allFiltered = electiveSections;
+    electiveState.classFilter = 'all';
+    electiveState.sortOrder = 'none';
+    
+    const filterSelect = document.getElementById('filter-classes');
+    if (filterSelect) filterSelect.value = 'all';
+    
+    const indicator = document.getElementById('sort-indicator');
+    if (indicator) indicator.textContent = '';
+    
+    applyElectiveFiltersAndSort();
+}
+
+// Combine search keyword filtering, class count filtering and student count sorting
+function applyElectiveFiltersAndSort() {
+    const searchInput = document.getElementById('elective-search-input');
+    const searchVal = searchInput ? searchInput.value.trim().toLowerCase() : '';
+    
+    // 1. Filter by search keyword
+    let result = electiveSections;
+    if (searchVal) {
+        result = result.filter(item => 
+            item.title.toLowerCase().includes(searchVal) || 
+            item.teacher.toLowerCase().includes(searchVal) || 
+            item.dept.toLowerCase().includes(searchVal) || 
+            item.college.toLowerCase().includes(searchVal) || 
+            item.courseNum.toLowerCase().includes(searchVal)
+        );
+    }
+    
+    // 2. Filter by proposed number of classes
+    if (electiveState.classFilter !== 'all') {
+        result = result.filter(item => item.classes === electiveState.classFilter);
+    }
+    
+    // 3. Sort by student count
+    if (electiveState.sortOrder !== 'none') {
+        // Clone to avoid mutating original list order
+        result = [...result];
+        result.sort((a, b) => {
+            const numA = parseInt(a.selectNum) || 0;
+            const numB = parseInt(b.selectNum) || 0;
+            return electiveState.sortOrder === 'desc' ? numB - numA : numA - numB;
+        });
+    }
+    
+    // 4. Reset pagination state and render
+    electiveState.allFiltered = result;
     electiveState.renderedCount = 0;
     electiveState.lastCourseNum = null;
     
@@ -776,7 +848,26 @@ function resetElectiveSearch() {
     if (body) body.innerHTML = '';
     
     loadMoreElectives();
-    updateElectiveCount(electiveSections.length);
+    updateElectiveCount(result.length);
+}
+
+// Toggle sort order between none, desc, and asc
+function toggleEnrollmentSort() {
+    const indicator = document.getElementById('sort-indicator');
+    if (!indicator) return;
+    
+    if (electiveState.sortOrder === 'none') {
+        electiveState.sortOrder = 'desc';
+        indicator.textContent = ' [降序]';
+    } else if (electiveState.sortOrder === 'desc') {
+        electiveState.sortOrder = 'asc';
+        indicator.textContent = ' [升序]';
+    } else {
+        electiveState.sortOrder = 'none';
+        indicator.textContent = '';
+    }
+    
+    applyElectiveFiltersAndSort();
 }
 
 // Load more electives (infinite scroll pagination batch)
@@ -810,7 +901,7 @@ function loadMoreElectives() {
             headerRow.className = 'course-group-row';
             headerRow.innerHTML = `
                 <td colspan="6" style="background: #f7effd; font-weight: bold; color: #7f5bc7; font-family: var(--font-cute); padding: 8px 12px; border-bottom: 2px solid var(--pink-light);">
-                    📖 ${item.title} (课程号: ${item.courseNum} | 开课单位: ${item.college})
+                    ${item.title} (课程号: ${item.courseNum} | 开课单位: ${item.college})
                 </td>
             `;
             body.appendChild(headerRow);
@@ -839,7 +930,7 @@ function loadMoreElectives() {
         tipRow.innerHTML = `
             <td colspan="6" class="table-more-tip-row" style="text-align: center;">
                 <div style="color: #8c6adf; background: #fff8fc; padding: 10px; font-family: var(--font-cute); font-size: 13px; border-top: 1px dashed var(--pink);">
-                    ✨ 还有 ${remaining} 个班次，向下滚动或输入更精确的字词筛选 ✨
+                    还有 ${remaining} 个班次，向下滚动或输入更精确的字词筛选
                 </div>
             </td>
         `;
@@ -850,7 +941,7 @@ function loadMoreElectives() {
         tipRow.innerHTML = `
             <td colspan="6" class="table-more-tip-row" style="text-align: center;">
                 <div style="color: var(--pink-dark); background: #fff8fc; padding: 10px; font-family: var(--font-cute); font-size: 13px; border-top: 1px dashed var(--pink);">
-                    🌸 已加载全部 ${electiveState.allFiltered.length} 个班次喵 🌸
+                    已加载全部 ${electiveState.allFiltered.length} 个班次喵
                 </div>
             </td>
         `;
