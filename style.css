@@ -1,6 +1,12 @@
 /* Import retro & cute Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=VT323&family=ZCOOL+KuaiLe&family=ZCOOL+XiaoWei&display=swap');
 
+@font-face {
+    font-family: 'Zpix';
+    src: url('https://cdn.jsdelivr.net/gh/hellodigua/cdn/fonts/zpix.woff2') format('woff2');
+    font-display: swap;
+}
+
 :root {
     --pink: #f5b6dc;
     --pink-dark: #e889c3;
@@ -10,9 +16,9 @@
     --blue-dark: #63c7ff;
     --bg: #fff9fd;
     
-    --font-pixel: 'VT323', 'SimSun', monospace;
-    --font-cute: 'ZCOOL KuaiLe', 'Microsoft YaHei', sans-serif;
-    --font-default: 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-pixel: 'Zpix', 'VT323', 'SimSun', monospace;
+    --font-cute: 'Zpix', 'ZCOOL KuaiLe', 'Microsoft YaHei', sans-serif;
+    --font-default: 'Zpix', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 * {
@@ -511,6 +517,9 @@ body {
     font-size: 15px;
     border-bottom: 2px solid var(--purple);
     white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .course-table tbody tr {
