@@ -502,6 +502,15 @@ body {
     text-align: left;
     font-size: 14px;
     font-family: var(--font-cute);
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+}
+
+.course-table ::selection {
+    background: var(--pink-dark);
+    color: white;
 }
 
 .course-table th,
