@@ -956,7 +956,7 @@ function shutdownSystem() {
     overlay.style.cursor = 'pointer';
     
     overlay.innerHTML = `
-        <img src="assets/img/cute_ie.png" style="width:100px; height:100px; image-rendering:pixelated; margin-bottom: 20px; animation: float 3s infinite;" alt="Heart">
+        <img src="assets/img/cute_ie.png" class="shutdown-ie-icon" alt="IE">
         <h2 style="margin-bottom: 10px; font-size:24px;">IT IS TIME TO SLEEP...</h2>
         <p style="font-family: var(--font-pixel); font-size: 18px; color: #b28cf6;">双击屏幕任意位置重启系统</p>
     `;

@@ -35,6 +35,19 @@ img {
     -moz-crisp-edges: crisp-edges;
 }
 
+img[src$="cute_ie.png"] {
+    object-fit: contain;
+    object-position: center;
+    image-rendering: auto !important;
+}
+
+.shutdown-ie-icon {
+    width: 112px;
+    height: 112px;
+    margin-bottom: 20px;
+    animation: float 3s infinite;
+}
+
 body {
     background-color: var(--bg);
     /* Soft grid pattern for retro desktop */
