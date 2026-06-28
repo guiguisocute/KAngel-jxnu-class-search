@@ -3,7 +3,7 @@
 
 @font-face {
     font-family: 'Zpix';
-    src: url('https://cdn.jsdelivr.net/gh/hellodigua/cdn/fonts/zpix.woff2') format('woff2');
+    src: url('./fonts/zpix.woff2') format('woff2');
     font-display: swap;
 }
 
